@@ -20,7 +20,7 @@ function refreshWeather(response) {
                 alt="weather-emoji"
               />`;
   temperatureElement.innerHTML = Math.round(updatedTemperature);
-  console.log("response.data");
+  getForecast(response.data.city);
 }
 
 function formatDate(date) {
@@ -57,7 +57,15 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
-function displayForcast() {
+function getForecast(city) {
+  let apiKey = "t66df09o88f95a5ba815f1b8024034ae";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForcast);
+}
+
+function displayForcast(response) {
+  console.log(response);
+
   let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
   let forecastHtml = "";
   days.forEach(function (day) {
@@ -85,4 +93,3 @@ let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
 searchCity("Tehran");
-displayForcast();
